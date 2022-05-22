@@ -40,11 +40,11 @@ function P = fn_get_params_simu(numExp, N)
 %     
 % end
 
-P.Af = [ 0 5  ;
+P.Af = [ 0 50  ;
     0 0 ];
 
 P.Ab = [ 0 0  ;
-    20 0 ];
+    50 0 ];
 
 P.Al = [ 0 0  ;
     0 0 ];

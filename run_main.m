@@ -3,7 +3,7 @@
 clear all
 close all
 
-nExp = 1;
+nExp = 2;
 
 model = 'nmm_ac';
 
@@ -14,7 +14,7 @@ if nExp == 1
 
     acs = [0:0.5:20];
     load_system(model)
-    P = fn_get_params_simu(nExp, 1);
+
     N = 100;
     c = 0;
 
@@ -58,12 +58,12 @@ elseif nExp == 2
 
             in(c) = Simulink.SimulationInput(model);
             in(c) = in(c).setBlockParameter([model '/Sine Wave'],  'Amplitude', '10');
-            in(c) = in(c).setBlockParameter([model '/Sine Wave'],  'Frequency', '2*pi*4');
+            in(c) = in(c).setBlockParameter([model '/Sine Wave'],  'Frequency', '2*pi*4.5');
             in(c) = in(c).setBlockParameter([model '/Delay2'],  'DelayLength', num2str(dts(dt)));
             in(c) = in(c).setBlockParameter([model '/u1'],  'Seed', '1');
 
             in(c) = in(c).setBlockParameter([model '/Sine Wave1'],  'Amplitude', '10');
-            in(c) = in(c).setBlockParameter([model '/Sine Wave1'],  'Frequency', '2*pi*4');
+            in(c) = in(c).setBlockParameter([model '/Sine Wave1'],  'Frequency', '2*pi*4.5');
             in(c) = in(c).setBlockParameter([model '/Delay3'],  'DelayLength', num2str(dts(dt)));
             in(c) = in(c).setBlockParameter([model '/u2'],  'Seed', '1');
 

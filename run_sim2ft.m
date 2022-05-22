@@ -3,7 +3,7 @@
 clear
 close all
 
-nExp = 3;
+nExp = 2;
 pathData = fullfile(cd, ['out_' num2str(nExp)]);
 
 %% Convert to Fieldtrip
@@ -27,7 +27,7 @@ end
 
 Fs = nSample/dur;
 chanLabels  = {'y1','y2', 'x15-x16', 'x25-x26'};
-chanLabels  = {'y1','y2'};
+chanLabels  = {'y1','y2','x15','x16'};
 
 nChannel = length(chanLabels);
 
@@ -47,6 +47,9 @@ for iCond = 1:nCond
 
         tempData(1,:,iTrial) = out(iTrial+(iCond-1)*nTrials).y1.Data(1:nSample);
         tempData(2,:,iTrial) = out(iTrial+(iCond-1)*nTrials).y2.Data(1:nSample);
+
+        tempData(3,:,iTrial) = out(iTrial+(iCond-1)*nTrials).x15.Data(1:nSample);
+        tempData(4,:,iTrial) = out(iTrial+(iCond-1)*nTrials).x16.Data(1:nSample);
 
 %         x15 = out(iTrial+(iCond-1)*nTrials).x15.Data(1:nSample);
 %         x16 = out(iTrial+(iCond-1)*nTrials).x16.Data(1:nSample);
@@ -122,7 +125,22 @@ cfg.calcdof    = 'yes';
 
 freq = ft_freqanalysis(cfg, ftdata);
 
-save(['ftdata_freqTFR_' num2str(nExp)]  ,'freq')
+save(['ftdata_freqTFR_' num2str(nExp)]  ,'freq', '-v7.3')
+
+cfg = [];
+cfg.toi        = ftdata.time{1}(1:1000);
+cfg.channel    = 'all';
+cfg.tapsmofrq  = 2;
+cfg.method     = 'mtmfft';
+cfg.pad        = 'nextpow2';
+cfg.keeptrials = 'yes';
+cfg.output     = 'powandcsd';
+cfg.foi        = 0:0.5:50;
+cfg.calcdof    = 'yes';
+
+freq = ft_freqanalysis(cfg, ftdata);
+
+save(['ftdata_freq_' num2str(nExp)]  ,'freq', '-v7.3')
 
 elseif nExp == 3
 

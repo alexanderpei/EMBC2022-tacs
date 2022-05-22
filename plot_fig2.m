@@ -3,7 +3,7 @@
 clear all
 close all
 
-load ftdata_freq_2
+load ftdata_freqTFR_2
 
 %% Calculate entrainment time
 
@@ -78,7 +78,7 @@ c.Ticks = linspace(min(dts), max(dts), 3);
 c.TickLabels = {'0', '\pi', '2\pi'};
 c.LineWidth = 2;
 
-xlim([1 7])
-ylim([3e4 6e4])
-xlabel('Time (s)')
-ylabel('Power')
+% xlim([1 7])
+% ylim([3e4 6e4])
+% xlabel('Time (s)')
+% ylabel('Power')

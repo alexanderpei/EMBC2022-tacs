@@ -1,10 +1,10 @@
 %%
 
-clear all1
+clear all
 close all
 
 load ftdata_2
-load ftdata_freq_2
+load ftdata_freqTFR_2
 %% Calculate entrainment time
 
 nTrial = 101;
@@ -23,7 +23,7 @@ end
 
 %% Calculate pdot 
 
-dts = 500:10:1500;
+dts = 500:1:1500;
 t = 0:0.01:0.5;
 ac = 10*sin(2*pi*4*t);
 en = [];
@@ -34,11 +34,13 @@ all2 = [];
 
 for i = 1:101
 
-    x15 = ftdata.trial{102}(3,151+(i-1):151+(i-1)+50);
-    pdot = x15 + ac;
+    x15 = ftdata.trial{i}(3,151+(i-1):151+(i-1)+50);
+    x16 = ftdata.trial{i}(4,151+(i-1):151+(i-1)+50);
+
+    pdot = x15 - x16 + ac;
     all1 = [all1 mean(pdot.^2)];
 
-    x15 = ftdata.trial{102}(4,151+(i-1):151+(i-1)+50);
+    x15 = ftdata.trial{i}(4,151+(i-1):151+(i-1)+50);
     pdot = x15 + ac;
     all2 = [all2 mean(pdot.^2)];
 
@@ -59,13 +61,13 @@ box on
 
 pos = [ 3 0.1e-4 2 5.85e-4];
 scatter(eTime(iSort)/100, all1(iSort), 'k', 'filled')
-h = lsline;
-h.Color = 'r';
-h.LineWidth = 2;
+% h = lsline;
+% h.Color = 'r';
+% h.LineWidth = 2;
 ylabel('Ave. energy')
 xlabel('Time (s)')
 xlim([1 4.5])
-ylim([500 2000 ])
+% ylim([500 2000 ])
 
 ax = gca;
 ax.FontSize = 16;
